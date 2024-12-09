@@ -1,0 +1,17 @@
+button {
+    height: 20px;
+    width: 20px;
+    padding: 0px;
+    margin: 0px;
+
+}
+
+.calculator {
+    width: 500px;
+
+}
+
+#screen {
+    width: 90px;
+    text-align: end;
+}
