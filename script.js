@@ -17,9 +17,10 @@ function mul(num1, num2) {
     return num1 * num2
 }
 
-let num1 = 0
-let num2 = 0
-let operator = "+"
+let num1 = null
+let num2 = null
+let operator = null
+let screen = 0
 
 function operate(num1, num2, opp) {
     if (opp === "+") {
@@ -35,12 +36,11 @@ function operate(num1, num2, opp) {
     }
 }
 
-let screen = 0
 
 function fullClear() {
-    num1 = 0
-    num2 = 0
-    operator = ""
+    num1 = null
+    num2 = null
+    operator = null
     screen = 0
     document.getElementById("screen").textContent = screen
 }
@@ -48,7 +48,6 @@ function fullClear() {
 function clearScreen() {
     num1 = Number(screen)
     screen = 0
-
     document.getElementById("screen").textContent = screen
 }
 
@@ -64,16 +63,34 @@ function updateScreen() {
 }
 
 function opperateBtn() {
-    operator = this.id
-    num1 = Number(screen)
-    clearScreen()
+    if (operator === null) {
+        operator = this.id
+        num1 = Number(screen)
+        clearScreen()
+    } else {
+        equal()
+        num1 = Number(screen)
+    }
+
 }
 
 function equal() {
     num2 = Number(screen)
-    console.log(operate(num1, num2, operator))
-    screen = operate(num1, num2, operator)
+
+    if (num1 === null || num2 === null || operator === null) {
+        console.log("Insufficent items")
+        fullClear()
+        return
+    }
+    let val = operate(num1, num2, operator)
+    console.log(val.toString().length)
+    if (val.toString().length >= 10) {
+        screen = Number.parseFloat(val).toFixed(2)
+    } else {
+        screen = val
+    }
     document.getElementById("screen").textContent = screen
+    operator = null
 }
 
 var elements = document.getElementsByClassName("num")
@@ -90,5 +107,3 @@ for (var i = 0; i < elements.length; i++) {
 document.getElementById("clear").addEventListener("click", fullClear)
 document.getElementById("=").addEventListener("click", equal)
 document.getElementById("screen").textContent = screen
-
-console.log(operate(num1, num2, operator))
